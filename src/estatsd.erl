@@ -9,6 +9,10 @@
 
 -define(SERVER, estatsd_server).
 
+timing(Key,{micro,StartTime= {_,_,_}})->
+    Dur = timer:now_diff(erlang:now(), StartTime),
+    timing([Key,".micro"],Dur);
+
 % Convenience: just give it the now() tuple when the work started
 timing(Key, StartTime = {_,_,_}) ->
     Dur = erlang:round(timer:now_diff(erlang:now(), StartTime)/1000),
@@ -19,7 +23,8 @@ timing(Key, Duration) when is_integer(Duration) ->
     gen_server:cast(?SERVER, {timing, Key, Duration});
 
 timing(Key, Duration) -> 
-    gen_server:cast(?SERVER, {timing, Key, erlang:round(Duration)}).
+    Dur = erlang:round(Duration),
+    timing(Key,Dur).
 
 
 
