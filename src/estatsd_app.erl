@@ -3,7 +3,7 @@
 -behaviour(application).
 
 %% Application callbacks
--export([start/2, stop/1, enable/0, disable/0]).
+-export([start/2, stop/1]).
 
 %% ===================================================================
 %% Application callbacks
